@@ -534,8 +534,13 @@
         var instances = {};
         var lastRegisteredInstance;
 
+        function isRegistered(instanceId) {
+            return (typeof instances[instanceId] !== 'undefined');
+        };
+        this.isRegistered = isRegistered;
+        
         this.registerInstance = function(instanceId) {
-            if (typeof instances[instanceId] === 'undefined') {
+            if (!isRegistered(instanceId)) {
                 instances[instanceId] = {
                     asyncMode: false
                 };
@@ -547,10 +552,6 @@
             delete instances[instanceId];
         };
         
-        this.isRegistered = function(instanceId) {
-            return (typeof instances[instanceId] !== 'undefined');
-        };
-
         this.getLastInstanceId = function() {
             return lastRegisteredInstance;
         };
